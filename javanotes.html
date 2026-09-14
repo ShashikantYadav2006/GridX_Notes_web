@@ -1,0 +1,2383 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>GridX | JavaScript Notes</title>
+
+
+    <style>
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+
+            background: #0f172a;
+
+            color: white;
+
+            overflow-x: hidden;
+        }
+
+
+        /* =====================================================
+           ANIMATED BACKGROUND
+        ===================================================== */
+
+        body::before {
+            content: "";
+
+            position: fixed;
+
+            width: 500px;
+            height: 500px;
+
+            background:
+                rgba(168, 85, 247, 0.10);
+
+            border-radius: 50%;
+
+            filter: blur(100px);
+
+            top: -200px;
+            left: -200px;
+
+            z-index: -1;
+
+            animation:
+                backgroundMove 8s infinite alternate;
+        }
+
+        body::after {
+            content: "";
+
+            position: fixed;
+
+            width: 450px;
+            height: 450px;
+
+            background:
+                rgba(56, 189, 248, 0.08);
+
+            border-radius: 50%;
+
+            filter: blur(100px);
+
+            bottom: -200px;
+            right: -200px;
+
+            z-index: -1;
+
+            animation:
+                backgroundMove2 10s infinite alternate;
+        }
+
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        nav {
+            width: 100%;
+
+            min-height: 70px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            padding: 15px 7%;
+
+            background:
+                rgba(15, 23, 42, 0.88);
+
+            backdrop-filter: blur(15px);
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 1000;
+
+            border-bottom:
+                1px solid
+                rgba(255, 255, 255, 0.1);
+        }
+
+
+        .logo {
+            font-size: 28px;
+
+            font-weight: bold;
+
+            color: #38bdf8;
+
+            animation:
+                logoGlow 2s infinite alternate;
+        }
+
+
+        .logo span {
+            color: #f97316;
+        }
+
+
+        nav a {
+            color: white;
+
+            text-decoration: none;
+
+            transition: 0.3s;
+        }
+
+
+        nav a:hover {
+            color: #38bdf8;
+        }
+
+
+        /* =====================================================
+           BACK BUTTON
+        ===================================================== */
+
+        .back-button {
+            display: inline-block;
+
+            padding: 11px 22px;
+
+            border-radius: 25px;
+
+            background:
+                linear-gradient(
+                    45deg,
+                    #7c3aed,
+                    #38bdf8
+                );
+
+            color: white;
+
+            font-weight: bold;
+
+            text-decoration: none;
+
+            box-shadow:
+                0 0 20px
+                rgba(124, 58, 237, 0.25);
+
+            transition: 0.4s;
+        }
+
+
+        .back-button:hover {
+            transform:
+                translateY(-4px)
+                scale(1.04);
+
+            box-shadow:
+                0 10px 35px
+                rgba(56, 189, 248, 0.4);
+        }
+
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .notes-hero {
+            min-height: 55vh;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            align-items: center;
+
+            text-align: center;
+
+            padding: 80px 8%;
+
+            background:
+                radial-gradient(
+                    circle at 20% 30%,
+                    rgba(168, 85, 247, 0.20),
+                    transparent 30%
+                ),
+
+                radial-gradient(
+                    circle at 80% 70%,
+                    rgba(56, 189, 248, 0.18),
+                    transparent 30%
+                );
+
+            animation:
+                pageAppear 1s ease;
+        }
+
+
+        .js-logo {
+            width: 120px;
+            height: 120px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            margin-bottom: 30px;
+
+            border-radius: 30px;
+
+            background:
+                rgba(250, 204, 21, 0.15);
+
+            color: #facc15;
+
+            border:
+                1px solid
+                rgba(250, 204, 21, 0.5);
+
+            font-size: 50px;
+
+            font-weight: bold;
+
+            box-shadow:
+                0 0 40px
+                rgba(250, 204, 21, 0.12);
+
+            animation:
+                floating 4s ease-in-out infinite;
+        }
+
+
+        .notes-hero h1 {
+            font-size:
+                clamp(42px, 6vw, 75px);
+
+            margin-bottom: 20px;
+        }
+
+
+        .notes-hero h1 span {
+            color: #facc15;
+        }
+
+
+        .notes-hero p {
+            max-width: 750px;
+
+            color: #94a3b8;
+
+            font-size: 18px;
+
+            line-height: 1.8;
+        }
+
+
+        /* =====================================================
+           NOTES CONTAINER
+        ===================================================== */
+
+        .notes-container {
+            width: 90%;
+
+            max-width: 1200px;
+
+            margin: auto;
+
+            padding:
+                50px 0 100px;
+        }
+
+
+        /* =====================================================
+           NOTE CARD
+        ===================================================== */
+
+        .note-card {
+            margin-bottom: 30px;
+
+            padding: 35px;
+
+            border-radius: 25px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #1e293b,
+                    #111827
+                );
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.08);
+
+            position: relative;
+
+            overflow: hidden;
+
+            transition: 0.5s;
+
+            animation:
+                cardAppear 1s ease both;
+        }
+
+
+        .note-card:hover {
+            transform:
+                translateY(-8px);
+
+            border-color:
+                rgba(168, 85, 247, 0.7);
+
+            box-shadow:
+                0 20px 60px
+                rgba(0, 0, 0, 0.4),
+
+                0 0 30px
+                rgba(168, 85, 247, 0.10);
+        }
+
+
+        .note-card::before {
+            content: "";
+
+            position: absolute;
+
+            width: 180px;
+            height: 180px;
+
+            background:
+                #a855f7;
+
+            border-radius: 50%;
+
+            filter: blur(90px);
+
+            opacity: 0;
+
+            top: -100px;
+            right: -100px;
+
+            transition: 0.5s;
+        }
+
+
+        .note-card:hover::before {
+            opacity: 0.20;
+        }
+
+
+        /* =====================================================
+           NOTE HEADINGS
+        ===================================================== */
+
+        .note-card h2 {
+            color: #38bdf8;
+
+            font-size: 30px;
+
+            margin-bottom: 20px;
+
+            position: relative;
+        }
+
+
+        .note-card h3 {
+            color: #facc15;
+
+            font-size: 21px;
+
+            margin:
+                25px 0 12px;
+        }
+
+
+        .note-card p {
+            color: #cbd5e1;
+
+            line-height: 1.8;
+
+            margin-bottom: 12px;
+        }
+
+
+        .note-card ul {
+            margin-left: 25px;
+
+            color: #cbd5e1;
+
+            line-height: 2;
+        }
+
+
+        .note-card li::marker {
+            color: #a855f7;
+        }
+
+
+        /* =====================================================
+           CODE BOX
+        ===================================================== */
+
+        .code-box {
+            margin-top: 18px;
+
+            padding: 20px;
+
+            background: #020617;
+
+            border:
+                1px solid
+                rgba(56, 189, 248, 0.2);
+
+            border-radius: 15px;
+
+            overflow-x: auto;
+
+            box-shadow:
+                inset 0 0 30px
+                rgba(0, 0, 0, 0.25);
+        }
+
+
+        .code-box code {
+            color: #38bdf8;
+
+            font-family:
+                Consolas,
+                "Courier New",
+                monospace;
+
+            font-size: 15px;
+
+            line-height: 1.8;
+
+            white-space: pre;
+        }
+
+
+        .keyword {
+            color: #c084fc;
+        }
+
+
+        .string {
+            color: #86efac;
+        }
+
+
+        .comment {
+            color: #64748b;
+        }
+
+
+        .function {
+            color: #facc15;
+        }
+
+
+        /* =====================================================
+           TWO COLUMN NOTES
+        ===================================================== */
+
+        .two-column {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 25px;
+        }
+
+
+        .mini-card {
+            padding: 30px;
+
+            border-radius: 22px;
+
+            background:
+                #1e293b;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.08);
+
+            transition: 0.4s;
+        }
+
+
+        .mini-card:hover {
+            transform:
+                translateY(-8px);
+
+            border-color:
+                #38bdf8;
+
+            box-shadow:
+                0 15px 40px
+                rgba(0, 0, 0, 0.3);
+        }
+
+
+        .mini-card h3 {
+            color: #38bdf8;
+
+            margin-bottom: 15px;
+
+            font-size: 23px;
+        }
+
+
+        .mini-card p {
+            color: #94a3b8;
+
+            line-height: 1.7;
+        }
+
+
+        /* =====================================================
+           TABLE
+        ===================================================== */
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+
+        table {
+            width: 100%;
+
+            border-collapse: collapse;
+
+            margin-top: 20px;
+
+            min-width: 600px;
+        }
+
+
+        th,
+        td {
+            padding: 16px;
+
+            text-align: left;
+
+            border-bottom:
+                1px solid
+                rgba(255, 255, 255, 0.08);
+        }
+
+
+        th {
+            color: #38bdf8;
+
+            background:
+                rgba(56, 189, 248, 0.08);
+        }
+
+
+        td {
+            color: #cbd5e1;
+        }
+
+
+        tr:hover td {
+            background:
+                rgba(255, 255, 255, 0.03);
+        }
+
+
+        /* =====================================================
+           HIGHLIGHT
+        ===================================================== */
+
+        .highlight {
+            padding: 20px;
+
+            margin-top: 20px;
+
+            border-left:
+                4px solid
+                #facc15;
+
+            background:
+                rgba(250, 204, 21, 0.07);
+
+            border-radius:
+                0 12px 12px 0;
+
+            color: #fde68a;
+
+            line-height: 1.7;
+        }
+
+
+        /* =====================================================
+           TAG
+        ===================================================== */
+
+        .tag {
+            display: inline-block;
+
+            padding: 7px 14px;
+
+            margin:
+                5px 5px 5px 0;
+
+            border-radius: 20px;
+
+            background:
+                rgba(168, 85, 247, 0.12);
+
+            color: #c084fc;
+
+            border:
+                1px solid
+                rgba(168, 85, 247, 0.25);
+
+            font-size: 13px;
+        }
+
+
+        /* =====================================================
+           BOTTOM BUTTON
+        ===================================================== */
+
+        .bottom-button {
+            text-align: center;
+
+            padding:
+                30px 0 70px;
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        footer {
+            padding: 40px 8%;
+
+            text-align: center;
+
+            background: #020617;
+
+            color: #64748b;
+
+            border-top:
+                1px solid
+                rgba(255, 255, 255, 0.05);
+        }
+
+
+        footer span {
+            color: #38bdf8;
+        }
+
+
+        /* =====================================================
+           ANIMATIONS
+        ===================================================== */
+
+        @keyframes pageAppear {
+
+            from {
+                opacity: 0;
+
+                transform:
+                    translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+            }
+
+        }
+
+
+        @keyframes cardAppear {
+
+            from {
+                opacity: 0;
+
+                transform:
+                    translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+            }
+
+        }
+
+
+        @keyframes floating {
+
+            0%,
+            100% {
+                transform:
+                    translateY(0)
+                    rotate(0deg);
+            }
+
+            50% {
+                transform:
+                    translateY(-15px)
+                    rotate(3deg);
+            }
+
+        }
+
+
+        @keyframes logoGlow {
+
+            from {
+                text-shadow:
+                    0 0 5px #38bdf8;
+            }
+
+            to {
+                text-shadow:
+                    0 0 20px #38bdf8,
+                    0 0 40px #38bdf8;
+            }
+
+        }
+
+
+        @keyframes backgroundMove {
+
+            from {
+                transform:
+                    translate(0, 0);
+            }
+
+            to {
+                transform:
+                    translate(300px, 200px);
+            }
+
+        }
+
+
+        @keyframes backgroundMove2 {
+
+            from {
+                transform:
+                    translate(0, 0);
+            }
+
+            to {
+                transform:
+                    translate(-250px, -200px);
+            }
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE TABLET
+        ===================================================== */
+
+        @media (max-width: 800px) {
+
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                padding:
+                    15px 5%;
+            }
+
+            .notes-container {
+                width: 92%;
+            }
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE MOBILE
+        ===================================================== */
+
+        @media (max-width: 600px) {
+
+            nav {
+                flex-direction: column;
+
+                gap: 15px;
+
+                padding: 20px;
+            }
+
+            .notes-hero {
+                padding:
+                    60px 5%;
+            }
+
+            .notes-hero h1 {
+                font-size: 42px;
+            }
+
+            .notes-hero p {
+                font-size: 16px;
+            }
+
+            .js-logo {
+                width: 95px;
+                height: 95px;
+
+                font-size: 38px;
+            }
+
+            .note-card {
+                padding: 25px;
+            }
+
+            .note-card h2 {
+                font-size: 25px;
+            }
+
+            .code-box {
+                padding: 15px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         NAVBAR
+    ===================================================== -->
+
+    <nav>
+
+        <div class="logo">
+            Grid<span>X</span>
+        </div>
+
+        <!-- GO BACK TO HOME -->
+
+        <a
+            href="home.html"
+            class="back-button"
+        >
+            ← Go Back Home
+        </a>
+
+    </nav>
+
+
+    <!-- =====================================================
+         HERO
+    ===================================================== -->
+
+    <section class="notes-hero">
+
+        <div class="js-logo">
+            JS
+        </div>
+
+        <h1>
+            JavaScript
+            <span>Notes</span>
+        </h1>
+
+        <p>
+            Complete JavaScript notes for beginners.
+            Learn JavaScript fundamentals, variables,
+            operators, functions, arrays, objects,
+            DOM, events, loops and more.
+        </p>
+
+    </section>
+
+
+    <!-- =====================================================
+         NOTES
+    ===================================================== -->
+
+    <main class="notes-container">
+
+
+        <!-- =================================================
+             1. INTRODUCTION
+        ================================================= -->
+
+        <section class="note-card">
+
+            <h2>
+                1. Introduction to JavaScript
+            </h2>
+
+            <p>
+                JavaScript is a programming language used
+                to make web pages interactive and dynamic.
+            </p>
+
+            <p>
+                HTML creates the structure, CSS creates
+                the design, and JavaScript adds behavior
+                and interaction.
+            </p>
+
+            <h3>
+                What can JavaScript do?
+            </h3>
+
+            <ul>
+
+                <li>
+                    Change HTML content
+                </li>
+
+                <li>
+                    Change CSS styles
+                </li>
+
+                <li>
+                    Handle button clicks
+                </li>
+
+                <li>
+                    Validate forms
+                </li>
+
+                <li>
+                    Create interactive menus
+                </li>
+
+                <li>
+                    Create games and applications
+                </li>
+
+                <li>
+                    Communicate with APIs
+                </li>
+
+            </ul>
+
+        </section>
+
+
+        <!-- =================================================
+             2. ADD JAVASCRIPT
+        ================================================= -->
+
+        <section class="note-card">
+
+            <h2>
+                2. Adding JavaScript to HTML
+            </h2>
+
+            <p>
+                JavaScript can be added to an HTML document
+                using the script tag.
+            </p>
+
+            <div class="code-box">
+
+<code>&lt;script&gt;
+
+    alert(<span class="string">"Hello World!"</span>);
+
+&lt;/script&gt;</code>
+
+            </div>
+
+            <h3>
+                External JavaScript
+            </h3>
+
+            <div class="code-box">
+
+<code>&lt;script src=<span class="string">"script.js"</span>&gt;
+&lt;/script&gt;</code>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             3. VARIABLES
+        ================================================= -->
+
+        <section class="note-card">
+
+            <h2>
+                3. Variables
+            </h2>
+
+            <p>
+                Variables are used to store data.
+            </p>
+
+            <div class="code-box">
+
+<code><span class="keyword">let</span> name = <span class="string">"Rahul"</span>;
+
+<span class="keyword">const</span> age = 20;
+
+<span class="keyword">var</span> city = <span class="string">"Delhi"</span>;</code>
+
+            </div>
+
+            <h3>
+                let
+            </h3>
+
+            <p>
+                Use <b>let</b> when the value may change.
+            </p>
+
+            <h3>
+                const
+            </h3>
+
+            <p>
+                Use <b>const</b> when the value should not
+                be reassigned.
+            </p>
+
+            <h3>
+                var
+            </h3>
+
+            <p>
+                var is the older way of declaring variables.
+                Modern JavaScript generally prefers let and const.
+            </p>
+
+        </section>
+
+
+        <!-- =================================================
+             4. DATA TYPES
+        ================================================= -->
+
+        <section class="note-card">
+
+            <h2>
+                4. JavaScript Data Types
+            </h2>
+
+            <div class="two-column">
+
+                <div class="mini-card">
+
+                    <h3>
+                        Primitive Types
+                    </h3>
+
+                    <p>
+                        String
+                    </p>
+
+                    <p>
+                        Number
+                    </p>
+
+                    <p>
+                        Boolean
+                    </p>
+
+                    <p>
+                        Undefined
+                    </p>
+
+                    <p>
+                        Null
+                    </p>
+
+                    <p>
+                        BigInt
+                    </p>
+
+                    <p>
+                        Symbol
+                    </p>
+
+                </div>
+
+
+                <div class="mini-card">
+
+                    <h3>
+                        Reference Types
+                    </h3>
+
+                    <p>
+                        Objects
+                    </p>
+
+                    <p>
+                        Arrays
+                    </p>
+
+                    <p>
+                        Functions
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="code-box">
+
+<code><span class="keyword">let</span> name = <span class="string">"Alex"</span>;
+
+<span class="keyword">let</span> age = 25;
+
+<span class="keyword">let</span> student = <span class="keyword">true</span>;
+
+<span class="keyword">let</span> value = <span class="keyword">null</span>;</code>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             5. OPERATORS
+        ================================================= -->
+
+        <section class="note-card">
+
+            <h2>
+                5. Operators
+            </h2>
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <tr>
+                        <th>
+                            Operator
+                        </th>
+
+                        <th>
+                            Meaning
+                        </th>
+
+                        <th>
+                            Example
+                        </th>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            +
+                        </td>
+
+                        <td>
+                            Addition
+                        </td>
+
+                        <td>
+                            10 + 5
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            -
+                        </td>
+
+                        <td>
+                            Subtraction
+                        </td>
+
+                        <td>
+                            10 - 5
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            *
+                        </td>
+
+                        <td>
+                            Multiplication
+                        </td>
+
+                        <td>
+                            10 * 5
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            /
+                        </td>
+
+                        <td>
+                            Division
+                        </td>
+
+                        <td>
+                            10 / 5
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            %
+                        </td>
+
+                        <td>
+                            Remainder
+                        </td>
+
+                        <td>
+                            10 % 3
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            ===
+                        </td>
+
+                        <td>
+                            Strict equality
+                        </td>
+
+                        <td>
+                            10 === 10
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            !==
+                        </td>
+
+                        <td>
+                            Strict not equal
+                        </td>
+
+                        <td>
+                            10 !== 5
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            &gt;
+                        </td>
+
+                        <td>
+                            Greater than
+                        </td>
+
+                        <td>
+                            10 &gt; 5
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            &lt;
+                        </td>
+
+                        <td>
+                            Less than
+                        </td>
+
+                        <td>
+                            5 &lt; 10
+                        </td>
+                    </tr>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             6. CONDITIONALS
+        ================================================= -->
+
+        <section class="note-card">
+
+            <h2>
+                6. Conditional Statements
+            </h2>
+
+            <p>
+                Conditional statements allow a program to
+                make decisions.
+            </p>
+
+            <div class="code-box">
+
+<code><span class="keyword">let</span> age = 18;
+
+<span class="keyword">if</span> (age &gt;= 18) {
+
+    console.log(<span class="string">"Adult"</span>);
+
+} <span class="keyword">else</span> {
+
+    console.log(<span class="string">"Minor"</span>);
+
+}</code>
+
+            </div>
+
+            <h3>
+                else if
+            </h3>
+
+            <div class="code-box">
+
+<code><span class="keyword">if</span> (marks &gt;= 90) {
+
+    grade = <span class="string">"A"</span>;
+
+} <span class="keyword">else if</span> (marks &gt;= 60) {
+
+    grade = <span class="string">"B"</span>;
+
+} <span class="keyword">else</span> {
+
+    grade = <span class="string">"C"</span>;
+
+}</code>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             7. SWITCH
+        ================================================= -->
+
+        <section class="note-card">
+
+            <h2>
+                7. Switch Statement
+            </h2>
+
+            <div class="code-box">
+
+<code><span class="keyword">let</span> day = 2;
+
+<span class="keyword">switch</span> (day) {
+
+    <span class="keyword">case</span> 1:
+        console.log(<span class="string">"Monday"</span>);
+        <span class="keyword">break</span>;
+
+    <span class="keyword">case</span> 2:
+        console.log(<span class="string">"Tuesday"</span>);
+        <span class="keyword">break</span>;
+
+    <span class="keyword">default</span>:
+        console.log(<span class="string">"Unknown day"</span>);
+
+}</code>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             8. LOOPS
+        ================================================= -->
+
+        <section class="note-card">
+
+            <h2>
+                8. Loops
+            </h2>
+
+            <p>
+                Loops are used to execute code repeatedly.
+            </p>
+
+            <h3>
+                For Loop
+            </h3>
+
+            <div class="code-box">
+
+<code><span class="keyword">for</span> (
+    <span class="keyword">let</span> i = 0;
+    i &lt; 5;
+    i++
+) {
+
+    console.log(i);
+
+}</code>
+
+            </div>
+
+            <h3>
+                While Loop
+            </h3>
+
+            <div class="code-box">
+
+<code><span class="keyword">let</span> i = 0;
+
+<span class="keyword">while</span> (i &lt; 5) {
+
+    console.log(i);
+
+    i++;
+
+}</code>
+
+            </div>
+
+            <h3>
+                For...of
+            </h3>
+
+            <div class="code-box">
+
+<code><span class="keyword">const</span> fruits =
+    [<span class="string">"Apple"</span>, <span class="string">"Banana"</span>, <span class="string">"Mango"</span>];
+
+<span class="keyword">for</span> (
+    <span class="keyword">const</span> fruit <span class="keyword">of</span> fruits
+) {
+
+    console.log(fruit);
+
+}</code>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             9. FUNCTIONS
+        ================================================= -->
+
+        <section class="note-card">
+
+            <h2>
+                9. Functions
+            </h2>
+
+            <p>
+                A function is a reusable block of code
+                designed to perform a particular task.
+            </p>
+
+            <div class="code-box">
+
+<code><span class="keyword">function</span> <span class="function">greet</span>() {
+
+    console.log(<span class="string">"Hello World"</span>);
+
+}
+
+greet();</code>
+
+            </div>
+
+            <h3>
+                Function Parameters
+            </h3>
+
+            <div class="code-box">
+
+<code><span class="keyword">function</span> <span class="function">add</span>(a, b) {
+
+    <span class="keyword">return</span> a + b;
+
+}
+
+<span class="keyword">let</span> result = add(10, 20);</code>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             10. ARROW FUNCTIONS
+        ================================================= -->
+
+        <section class="note-card">
+
+            <h2>
+                10. Arrow Functions
+            </h2>
+
+            <p>
+                Arrow functions provide a shorter syntax
+                for writing functions.
+            </p>
+
+            <div class="code-box">
+
+<code><span class="keyword">const</span> greet = () =&gt; {
+
+    console.log(<span class="string">"Hello"</span>);
+
+};</code>
+
+            </div>
+
+            <div class="code-box">
+
+<code><span class="keyword">const</span> add = (a, b) =&gt; a + b;</code>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             11. ARRAYS
+        ================================================= -->
+
+        <section class="note-card">
+
+            <h2>
+                11. Arrays
+            </h2>
+
+            <p>
+                Arrays are used to store multiple values
+                inside a single variable.
+            </p>
+
+            <div class="code-box">
+
+<code><span class="keyword">let</span> fruits = [
+
+    <span class="string">"Apple"</span>,
+    <span class="string">"Banana"</span>,
+    <span class="string">"Mango"</span>
+
+];
+
+console.log(fruits[0]);</code>
+
+            </div>
+
+            <h3>
+                Common Array Methods
+            </h3>
+
+            <span class="tag">
+                push()
+            </span>
+
+            <span class="tag">
+                pop()
+            </span>
+
+            <span class="tag">
+                shift()
+            </span>
+
+            <span class="tag">
+                unshift()
+            </span>
+
+            <span class="tag">
+                map()
+            </span>
+
+            <span class="tag">
+                filter()
+            </span>
+
+            <span class="tag">
+                reduce()
+            </span>
+
+            <span class="tag">
+                forEach()
+            </span>
+
+        </section>
+
+
+        <!-- =================================================
+             12. OBJECTS
+        ================================================= -->
+
+        <section class="note-card">
+
+            <h2>
+                12. Objects
+            </h2>
+
+            <p>
+                Objects store data in key-value pairs.
+            </p>
+
+            <div class="code-box">
+
+<code><span class="keyword">const</span> student = {
+
+    name: <span class="string">"Alex"</span>,
+
+    age: 20,
+
+    course: <span class="string">"Web Development"</span>
+
+};
+
+console.log(student.name);</code>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             13. DOM
+        ================================================= -->
+
+        <section class="note-card">
+
+            <h2>
+                13. DOM - Document Object Model
+            </h2>
+
+            <p>
+                The DOM represents an HTML document as a
+                tree of objects. JavaScript can use the DOM
+                to access and change HTML elements.
+            </p>
+
+            <h3>
+                Selecting an Element
+            </h3>
+
+            <div class="code-box">
+
+<code><span class="keyword">const</span> heading =
+    document.getElementById(<span class="string">"title"</span>);</code>
+
+            </div>
+
+            <h3>
+                Changing Text
+            </h3>
+
+            <div class="code-box">
+
+<code>document.getElementById(<span class="string">"title"</span>)
+    .textContent = <span class="string">"Hello JavaScript"</span>;</code>
+
+            </div>
+
+            <h3>
+                querySelector
+            </h3>
+
+            <div class="code-box">
+
+<code><span class="keyword">const</span> box =
+    document.querySelector(<span class="string">".box"</span>);</code>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             14. EVENTS
+        ================================================= -->
+
+        <section class="note-card">
+
+            <h2>
+                14. JavaScript Events
+            </h2>
+
+            <p>
+                Events happen when a user interacts with
+                a web page.
+            </p>
+
+            <div class="two-column">
+
+                <div class="mini-card">
+
+                    <h3>
+                        Common Events
+                    </h3>
+
+                    <p>
+                        click
+                    </p>
+
+                    <p>
+                        mouseover
+                    </p>
+
+                    <p>
+                        mouseout
+                    </p>
+
+                    <p>
+                        keydown
+                    </p>
+
+                    <p>
+                        keyup
+                    </p>
+
+                    <p>
+                        submit
+                    </p>
+
+                    <p>
+                        change
+                    </p>
+
+                </div>
+
+
+                <div class="mini-card">
+
+                    <h3>
+                        Example
+                    </h3>
+
+                    <div class="code-box">
+
+<code>button.addEventListener(
+    <span class="string">"click"</span>,
+    () =&gt; {
+
+    console.log(
+        <span class="string">"Button clicked"</span>
+    );
+
+});</code>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             15. STRING METHODS
+        ================================================= -->
+
+        <section class="note-card">
+
+            <h2>
+                15. String Methods
+            </h2>
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <tr>
+
+                        <th>
+                            Method
+                        </th>
+
+                        <th>
+                            Purpose
+                        </th>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>
+                            toUpperCase()
+                        </td>
+
+                        <td>
+                            Converts text to uppercase
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>
+                            toLowerCase()
+                        </td>
+
+                        <td>
+                            Converts text to lowercase
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>
+                            trim()
+                        </td>
+
+                        <td>
+                            Removes extra spaces
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>
+                            includes()
+                        </td>
+
+                        <td>
+                            Checks whether text exists
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>
+                            slice()
+                        </td>
+
+                        <td>
+                            Extracts part of a string
+                        </td>
+
+                    </tr>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             16. ARRAY METHODS
+        ================================================= -->
+
+        <section class="note-card">
+
+            <h2>
+                16. Important Array Methods
+            </h2>
+
+            <h3>
+                map()
+            </h3>
+
+            <p>
+                Creates a new array by transforming every
+                element.
+            </p>
+
+            <div class="code-box">
+
+<code><span class="keyword">const</span> numbers = [1, 2, 3];
+
+<span class="keyword">const</span> doubled =
+    numbers.map(number =&gt; number * 2);</code>
+
+            </div>
+
+            <h3>
+                filter()
+            </h3>
+
+            <p>
+                Creates a new array containing elements
+                that pass a condition.
+            </p>
+
+            <div class="code-box">
+
+<code><span class="keyword">const</span> numbers = [1, 2, 3, 4];
+
+<span class="keyword">const</span> even =
+    numbers.filter(number =&gt; number % 2 === 0);</code>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             17. ES6
+        ================================================= -->
+
+        <section class="note-card">
+
+            <h2>
+                17. Modern JavaScript / ES6
+            </h2>
+
+            <p>
+                ES6 introduced many useful features to
+                modern JavaScript.
+            </p>
+
+            <div class="two-column">
+
+                <div class="mini-card">
+
+                    <h3>
+                        ES6 Features
+                    </h3>
+
+                    <p>
+                        let and const
+                    </p>
+
+                    <p>
+                        Arrow functions
+                    </p>
+
+                    <p>
+                        Template literals
+                    </p>
+
+                    <p>
+                        Destructuring
+                    </p>
+
+                    <p>
+                        Spread operator
+                    </p>
+
+                    <p>
+                        Classes
+                    </p>
+
+                </div>
+
+
+                <div class="mini-card">
+
+                    <h3>
+                        Template Literal
+                    </h3>
+
+                    <div class="code-box">
+
+<code><span class="keyword">const</span> name = <span class="string">"Alex"</span>;
+
+<span class="keyword">const</span> message =
+    <span class="string">`Hello ${name}`</span>;</code>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             18. DESTRUCTURING
+        ================================================= -->
+
+        <section class="note-card">
+
+            <h2>
+                18. Destructuring
+            </h2>
+
+            <p>
+                Destructuring allows values to be extracted
+                easily from arrays and objects.
+            </p>
+
+            <div class="code-box">
+
+<code><span class="keyword">const</span> person = {
+
+    name: <span class="string">"Alex"</span>,
+
+    age: 25
+
+};
+
+<span class="keyword">const</span> { name, age } = person;</code>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             19. SPREAD OPERATOR
+        ================================================= -->
+
+        <section class="note-card">
+
+            <h2>
+                19. Spread Operator
+            </h2>
+
+            <p>
+                The spread operator is represented by three
+                dots and is used to expand values.
+            </p>
+
+            <div class="code-box">
+
+<code><span class="keyword">const</span> first = [1, 2, 3];
+
+<span class="keyword">const</span> second = [4, 5, 6];
+
+<span class="keyword">const</span> combined = [
+    ...first,
+    ...second
+];</code>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             20. CLASSES
+        ================================================= -->
+
+        <section class="note-card">
+
+            <h2>
+                20. JavaScript Classes
+            </h2>
+
+            <p>
+                Classes are used to create objects using
+                a reusable structure.
+            </p>
+
+            <div class="code-box">
+
+<code><span class="keyword">class</span> Student {
+
+    constructor(name, age) {
+
+        <span class="keyword">this</span>.name = name;
+
+        <span class="keyword">this</span>.age = age;
+
+    }
+
+    greet() {
+
+        console.log(
+            <span class="string">`Hello ${this.name}`</span>
+        );
+
+    }
+
+}</code>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             21. JSON
+        ================================================= -->
+
+        <section class="note-card">
+
+            <h2>
+                21. JSON
+            </h2>
+
+            <p>
+                JSON stands for JavaScript Object Notation.
+                It is commonly used for storing and exchanging
+                data between applications.
+            </p>
+
+            <div class="code-box">
+
+<code>{
+    <span class="string">"name"</span>: <span class="string">"Alex"</span>,
+    <span class="string">"age"</span>: 25,
+    <span class="string">"course"</span>: <span class="string">"JavaScript"</span>
+}</code>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             22. ASYNC
+        ================================================= -->
+
+        <section class="note-card">
+
+            <h2>
+                22. Asynchronous JavaScript
+            </h2>
+
+            <p>
+                Asynchronous JavaScript allows tasks to
+                run without blocking the entire program.
+            </p>
+
+            <h3>
+                setTimeout
+            </h3>
+
+            <div class="code-box">
+
+<code>setTimeout(() =&gt; {
+
+    console.log(
+        <span class="string">"Hello after 2 seconds"</span>
+    );
+
+}, 2000);</code>
+
+            </div>
+
+            <h3>
+                Promise
+            </h3>
+
+            <div class="code-box">
+
+<code><span class="keyword">const</span> promise =
+    <span class="keyword">new</span> Promise(
+        (resolve, reject) =&gt; {
+
+        resolve(<span class="string">"Success"</span>);
+
+    }
+);</code>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             23. FETCH API
+        ================================================= -->
+
+        <section class="note-card">
+
+            <h2>
+                23. Fetch API
+            </h2>
+
+            <p>
+                The Fetch API can be used to request data
+                from a server or API.
+            </p>
+
+            <div class="code-box">
+
+<code>fetch(<span class="string">"https://example.com/data"</span>)
+    .then(response =&gt; response.json())
+    .then(data =&gt; {
+
+        console.log(data);
+
+    })
+    .catch(error =&gt; {
+
+        console.log(error);
+
+    });</code>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             24. TRY CATCH
+        ================================================= -->
+
+        <section class="note-card">
+
+            <h2>
+                24. Error Handling
+            </h2>
+
+            <p>
+                try...catch can be used to handle errors
+                without stopping the entire application.
+            </p>
+
+            <div class="code-box">
+
+<code><span class="keyword">try</span> {
+
+    <span class="comment">// Code that may cause an error</span>
+
+} <span class="keyword">catch</span> (error) {
+
+    console.log(error);
+
+}</code>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             25. IMPORTANT POINTS
+        ================================================= -->
+
+        <section class="note-card">
+
+            <h2>
+                25. Important JavaScript Points
+            </h2>
+
+            <div class="highlight">
+
+                JavaScript is case-sensitive.
+                For example, <b>name</b> and <b>Name</b>
+                are different variables.
+
+            </div>
+
+            <ul>
+
+                <li>
+                    Use const by default when a variable
+                    does not need reassignment.
+                </li>
+
+                <li>
+                    Use let when a value needs to change.
+                </li>
+
+                <li>
+                    Use === for strict comparison.
+                </li>
+
+                <li>
+                    Functions help keep code reusable.
+                </li>
+
+                <li>
+                    Arrays store multiple values.
+                </li>
+
+                <li>
+                    Objects store data using key-value pairs.
+                </li>
+
+                <li>
+                    DOM allows JavaScript to interact with HTML.
+                </li>
+
+                <li>
+                    Events allow JavaScript to respond to
+                    user actions.
+                </li>
+
+            </ul>
+
+        </section>
+
+
+        <!-- =================================================
+             BACK HOME
+        ================================================= -->
+
+        <div class="bottom-button">
+
+            <a
+                href="home.html"
+                class="back-button"
+            >
+                ← Back to Home
+            </a>
+
+        </div>
+
+
+    </main>
+
+
+    <!-- =====================================================
+         FOOTER
+    ===================================================== -->
+
+    <footer>
+
+        <p>
+
+            © 2026
+
+            <span>
+                GridX
+            </span>
+
+            |
+
+            JavaScript Learning Notes
+
+        </p>
+
+    </footer>
+
+
+</body>
+
+</html>

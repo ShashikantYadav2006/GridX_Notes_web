@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>GridX | Contact Sky</title>
+
+
+    <style>
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background: #0f172a;
+
+            color: white;
+
+            overflow-x: hidden;
+        }
+
+
+        /* =====================================================
+           ANIMATED BACKGROUND
+        ===================================================== */
+
+        body::before {
+
+            content: "";
+
+            position: fixed;
+
+            width: 500px;
+            height: 500px;
+
+            background:
+                rgba(56, 189, 248, 0.10);
+
+            border-radius: 50%;
+
+            filter: blur(100px);
+
+            top: -220px;
+            left: -200px;
+
+            z-index: -1;
+
+            animation:
+                backgroundMove 8s
+                infinite alternate;
+        }
+
+
+        body::after {
+
+            content: "";
+
+            position: fixed;
+
+            width: 450px;
+            height: 450px;
+
+            background:
+                rgba(168, 85, 247, 0.10);
+
+            border-radius: 50%;
+
+            filter: blur(100px);
+
+            bottom: -200px;
+            right: -200px;
+
+            z-index: -1;
+
+            animation:
+                backgroundMove2 10s
+                infinite alternate;
+        }
+
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        nav {
+
+            width: 100%;
+
+            min-height: 70px;
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
+            padding:
+                15px 7%;
+
+            background:
+                rgba(15, 23, 42, 0.88);
+
+            backdrop-filter:
+                blur(15px);
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 1000;
+
+            border-bottom:
+                1px solid
+                rgba(255, 255, 255, 0.10);
+        }
+
+
+        .logo {
+
+            font-size: 28px;
+
+            font-weight: bold;
+
+            color: #38bdf8;
+
+            animation:
+                logoGlow 2s
+                infinite alternate;
+        }
+
+
+        .logo span {
+
+            color: #f97316;
+        }
+
+
+        nav ul {
+
+            display: flex;
+
+            list-style: none;
+
+            gap: 30px;
+        }
+
+
+        nav ul li a {
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 16px;
+
+            position: relative;
+
+            transition: 0.3s;
+        }
+
+
+        nav ul li a::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 0;
+
+            height: 2px;
+
+            background: #38bdf8;
+
+            left: 0;
+
+            bottom: -7px;
+
+            transition: 0.3s;
+        }
+
+
+        nav ul li a:hover {
+
+            color: #38bdf8;
+        }
+
+
+        nav ul li a:hover::after {
+
+            width: 100%;
+        }
+
+
+        /* =====================================================
+           MAIN CONTACT SECTION
+        ===================================================== */
+
+        .contact-section {
+
+            min-height: calc(100vh - 70px);
+
+            padding:
+                80px 8%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+        }
+
+
+        .contact-container {
+
+            width: 100%;
+
+            max-width: 1150px;
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 50px;
+
+            align-items: stretch;
+        }
+
+
+        /* =====================================================
+           LEFT OWNER CARD
+        ===================================================== */
+
+        .owner-card {
+
+            position: relative;
+
+            padding: 45px 35px;
+
+            border-radius: 30px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #1e293b,
+                    #111827
+                );
+
+            border:
+                1px solid
+                rgba(56, 189, 248, 0.20);
+
+            overflow: hidden;
+
+            animation:
+                slideLeft 1s ease;
+        }
+
+
+        .owner-card::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 250px;
+
+            height: 250px;
+
+            border-radius: 50%;
+
+            background:
+                #38bdf8;
+
+            filter: blur(90px);
+
+            opacity: 0.15;
+
+            top: -130px;
+
+            right: -100px;
+
+            animation:
+                glowMove 5s
+                infinite alternate;
+        }
+
+
+        .owner-card::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 200px;
+
+            height: 200px;
+
+            border-radius: 50%;
+
+            background:
+                #8b5cf6;
+
+            filter: blur(90px);
+
+            opacity: 0.10;
+
+            bottom: -100px;
+
+            left: -80px;
+        }
+
+
+        /* =====================================================
+           PROFILE ICON
+        ===================================================== */
+
+        .profile-icon {
+
+            width: 120px;
+
+            height: 120px;
+
+            margin:
+                0 auto 25px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0284c7,
+                    #8b5cf6
+                );
+
+            border:
+                3px solid
+                rgba(255, 255, 255, 0.15);
+
+            box-shadow:
+                0 0 30px
+                rgba(56, 189, 248, 0.35);
+
+            font-size: 48px;
+
+            font-weight: bold;
+
+            animation:
+                profileFloat 4s
+                ease-in-out
+                infinite;
+        }
+
+
+        .owner-content {
+
+            position: relative;
+
+            z-index: 2;
+
+            text-align: center;
+        }
+
+
+        .owner-content .small-title {
+
+            display: inline-block;
+
+            padding:
+                7px 16px;
+
+            border-radius: 30px;
+
+            color: #38bdf8;
+
+            background:
+                rgba(56, 189, 248, 0.08);
+
+            border:
+                1px solid
+                rgba(56, 189, 248, 0.30);
+
+            font-size: 14px;
+
+            margin-bottom: 18px;
+        }
+
+
+        .owner-content h1 {
+
+            font-size: 48px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .owner-content h1 span {
+
+            color: #38bdf8;
+        }
+
+
+        .owner-role {
+
+            color: #f97316;
+
+            font-size: 18px;
+
+            font-weight: bold;
+
+            margin-bottom: 22px;
+        }
+
+
+        .owner-content p {
+
+            color: #94a3b8;
+
+            line-height: 1.8;
+
+            font-size: 16px;
+
+            margin-bottom: 20px;
+        }
+
+
+        /* =====================================================
+           SKILLS
+        ===================================================== */
+
+        .skills {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            justify-content: center;
+
+            gap: 10px;
+
+            margin-top: 25px;
+        }
+
+
+        .skill {
+
+            padding:
+                8px 14px;
+
+            border-radius: 20px;
+
+            color: #cbd5e1;
+
+            background:
+                rgba(255, 255, 255, 0.05);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.10);
+
+            font-size: 13px;
+
+            transition: 0.3s;
+        }
+
+
+        .skill:hover {
+
+            transform:
+                translateY(-4px);
+
+            color: #38bdf8;
+
+            border-color:
+                #38bdf8;
+
+            box-shadow:
+                0 0 15px
+                rgba(56, 189, 248, 0.20);
+        }
+
+
+        /* =====================================================
+           EMAIL BOX
+        ===================================================== */
+
+        .owner-email {
+
+            display: inline-block;
+
+            margin-top: 25px;
+
+            padding:
+                12px 20px;
+
+            border-radius: 25px;
+
+            background:
+                rgba(56, 189, 248, 0.08);
+
+            border:
+                1px solid
+                rgba(56, 189, 248, 0.25);
+
+            color: #38bdf8;
+
+            text-decoration: none;
+
+            transition: 0.3s;
+        }
+
+
+        .owner-email:hover {
+
+            background:
+                rgba(56, 189, 248, 0.15);
+
+            box-shadow:
+                0 0 25px
+                rgba(56, 189, 248, 0.25);
+
+            transform:
+                translateY(-3px);
+        }
+
+
+        /* =====================================================
+           CONTACT FORM CARD
+        ===================================================== */
+
+        .form-card {
+
+            padding:
+                45px 40px;
+
+            border-radius: 30px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #1e293b,
+                    #111827
+                );
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.08);
+
+            box-shadow:
+                0 25px 70px
+                rgba(0, 0, 0, 0.30);
+
+            animation:
+                slideRight 1s ease;
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+
+        .form-card::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 250px;
+
+            height: 250px;
+
+            border-radius: 50%;
+
+            background:
+                #a855f7;
+
+            filter: blur(100px);
+
+            opacity: 0.10;
+
+            top: -150px;
+
+            right: -100px;
+        }
+
+
+        .form-content {
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+
+        .form-card h2 {
+
+            font-size: 38px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .form-card h2 span {
+
+            color: #38bdf8;
+        }
+
+
+        .form-card .form-intro {
+
+            color: #94a3b8;
+
+            line-height: 1.7;
+
+            margin-bottom: 30px;
+        }
+
+
+        /* =====================================================
+           FORM
+        ===================================================== */
+
+        .input-group {
+
+            margin-bottom: 20px;
+        }
+
+
+        .input-group label {
+
+            display: block;
+
+            color: #cbd5e1;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            margin-bottom: 8px;
+        }
+
+
+        .input-group input,
+        .input-group textarea {
+
+            width: 100%;
+
+            padding:
+                14px 16px;
+
+            border-radius: 12px;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.10);
+
+            outline: none;
+
+            background:
+                rgba(15, 23, 42, 0.75);
+
+            color: white;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            font-size: 15px;
+
+            transition: 0.3s;
+        }
+
+
+        .input-group input::placeholder,
+        .input-group textarea::placeholder {
+
+            color: #64748b;
+        }
+
+
+        .input-group input:focus,
+        .input-group textarea:focus {
+
+            border-color:
+                #38bdf8;
+
+            box-shadow:
+                0 0 20px
+                rgba(56, 189, 248, 0.12);
+
+            background:
+                rgba(15, 23, 42, 0.95);
+        }
+
+
+        .input-group textarea {
+
+            min-height: 140px;
+
+            resize: vertical;
+        }
+
+
+        /* =====================================================
+           SEND BUTTON
+        ===================================================== */
+
+        .send-btn {
+
+            width: 100%;
+
+            border: none;
+
+            cursor: pointer;
+
+            padding:
+                15px 25px;
+
+            border-radius: 30px;
+
+            background:
+                linear-gradient(
+                    45deg,
+                    #0284c7,
+                    #38bdf8
+                );
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            transition: 0.4s;
+
+            box-shadow:
+                0 0 25px
+                rgba(56, 189, 248, 0.25);
+
+            animation:
+                buttonPulse 3s
+                infinite;
+        }
+
+
+        .send-btn:hover {
+
+            transform:
+                translateY(-5px)
+                scale(1.02);
+
+            box-shadow:
+                0 10px 35px
+                rgba(56, 189, 248, 0.45);
+        }
+
+
+        /* =====================================================
+           BACK BUTTON
+        ===================================================== */
+
+        .back-area {
+
+            text-align: center;
+
+            margin-top: 25px;
+        }
+
+
+        .back-btn {
+
+            display: inline-block;
+
+            padding:
+                12px 25px;
+
+            border-radius: 30px;
+
+            color: #cbd5e1;
+
+            text-decoration: none;
+
+            background:
+                rgba(255, 255, 255, 0.05);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.10);
+
+            transition: 0.4s;
+        }
+
+
+        .back-btn:hover {
+
+            color: white;
+
+            border-color:
+                #38bdf8;
+
+            background:
+                rgba(56, 189, 248, 0.10);
+
+            transform:
+                translateY(-4px);
+        }
+
+
+        /* =====================================================
+           INFO BAR
+        ===================================================== */
+
+        .info-bar {
+
+            max-width: 1150px;
+
+            margin:
+                0 auto 50px;
+
+            padding:
+                18px 25px;
+
+            text-align: center;
+
+            border-radius: 18px;
+
+            background:
+                rgba(30, 41, 59, 0.70);
+
+            border:
+                1px solid
+                rgba(56, 189, 248, 0.15);
+
+            color: #94a3b8;
+
+            animation:
+                fadeIn 1.5s ease;
+        }
+
+
+        .info-bar span {
+
+            color: #38bdf8;
+
+            font-weight: bold;
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        footer {
+
+            padding:
+                35px 8%;
+
+            text-align: center;
+
+            background:
+                #020617;
+
+            color: #64748b;
+
+            border-top:
+                1px solid
+                rgba(255, 255, 255, 0.05);
+        }
+
+
+        footer span {
+
+            color: #38bdf8;
+        }
+
+
+        footer a {
+
+            color: #38bdf8;
+
+            text-decoration: none;
+
+            transition: 0.3s;
+        }
+
+
+        footer a:hover {
+
+            color: #7dd3fc;
+
+            text-shadow:
+                0 0 10px
+                #38bdf8;
+        }
+
+
+        /* =====================================================
+           ANIMATIONS
+        ===================================================== */
+
+        @keyframes slideLeft {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateX(-80px);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateX(0);
+            }
+        }
+
+
+        @keyframes slideRight {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateX(80px);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateX(0);
+            }
+        }
+
+
+        @keyframes fadeIn {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(20px);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+            }
+        }
+
+
+        @keyframes profileFloat {
+
+            0%,
+            100% {
+
+                transform:
+                    translateY(0)
+                    rotate(0deg);
+            }
+
+            50% {
+
+                transform:
+                    translateY(-12px)
+                    rotate(3deg);
+            }
+        }
+
+
+        @keyframes logoGlow {
+
+            from {
+
+                text-shadow:
+                    0 0 5px
+                    #38bdf8;
+            }
+
+            to {
+
+                text-shadow:
+                    0 0 20px
+                    #38bdf8,
+                    0 0 40px
+                    #38bdf8;
+            }
+        }
+
+
+        @keyframes backgroundMove {
+
+            from {
+
+                transform:
+                    translate(0, 0);
+            }
+
+            to {
+
+                transform:
+                    translate(300px, 200px);
+            }
+        }
+
+
+        @keyframes backgroundMove2 {
+
+            from {
+
+                transform:
+                    translate(0, 0);
+            }
+
+            to {
+
+                transform:
+                    translate(-250px, -200px);
+            }
+        }
+
+
+        @keyframes glowMove {
+
+            from {
+
+                transform:
+                    translate(0, 0);
+            }
+
+            to {
+
+                transform:
+                    translate(-80px, 80px);
+            }
+        }
+
+
+        @keyframes buttonPulse {
+
+            0%,
+            100% {
+
+                box-shadow:
+                    0 0 20px
+                    rgba(56, 189, 248, 0.20);
+            }
+
+            50% {
+
+                box-shadow:
+                    0 0 35px
+                    rgba(56, 189, 248, 0.40);
+            }
+        }
+
+
+        /* =====================================================
+           TABLET
+        ===================================================== */
+
+        @media (max-width: 900px) {
+
+            nav {
+
+                padding:
+                    15px 5%;
+            }
+
+
+            nav ul {
+
+                gap: 15px;
+            }
+
+
+            .contact-section {
+
+                padding:
+                    60px 5%;
+            }
+
+
+            .contact-container {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 600px) {
+
+            nav {
+
+                flex-direction: column;
+
+                gap: 20px;
+
+                padding:
+                    20px;
+            }
+
+
+            nav ul {
+
+                flex-wrap: wrap;
+
+                justify-content: center;
+
+                gap: 15px;
+            }
+
+
+            .contact-section {
+
+                padding:
+                    45px 5%;
+            }
+
+
+            .owner-card {
+
+                padding:
+                    35px 22px;
+            }
+
+
+            .form-card {
+
+                padding:
+                    35px 22px;
+            }
+
+
+            .owner-content h1 {
+
+                font-size: 40px;
+            }
+
+
+            .form-card h2 {
+
+                font-size: 32px;
+            }
+
+
+            .profile-icon {
+
+                width: 100px;
+
+                height: 100px;
+
+                font-size: 40px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         NAVBAR
+    ===================================================== -->
+
+    <nav>
+
+        <div class="logo">
+            Grid<span>X</span>
+        </div>
+
+
+        <ul>
+
+            <li>
+                <a href="home.html">
+                    Home
+                </a>
+            </li>
+
+            <li>
+                <a href="home.html#about">
+                    About
+                </a>
+            </li>
+
+            <li>
+                <a href="home.html#technologies">
+                    Technologies
+                </a>
+            </li>
+
+            <li>
+                <a href="home.html#services">
+                    Services
+                </a>
+            </li>
+
+            <li>
+                <a href="home.html#register">
+                    Registration
+                </a>
+            </li>
+
+            <li>
+                <a href="contact.html">
+                    Contact
+                </a>
+            </li>
+
+        </ul>
+
+    </nav>
+
+
+    <!-- =====================================================
+         CONTACT PAGE
+    ===================================================== -->
+
+    <section class="contact-section">
+
+
+        <div style="width:100%; max-width:1150px;">
+
+
+            <!-- =================================================
+                 INFO BAR
+            ================================================= -->
+
+            <div class="info-bar">
+
+                Have a question about
+                <span>Web Development</span>
+                or
+                <span>Technology?</span>
+                Send your query to Sky.
+
+            </div>
+
+
+            <div class="contact-container">
+
+
+                <!-- =============================================
+                     OWNER DETAILS
+                ============================================== -->
+
+                <div class="owner-card">
+
+
+                    <div class="owner-content">
+
+
+                        <div class="profile-icon">
+                            S
+                        </div>
+
+
+                        <span class="small-title">
+                            ✦ GridX Owner
+                        </span>
+
+
+                        <h1>
+                            Sky<span>.</span>
+                        </h1>
+
+
+                        <div class="owner-role">
+                            Professional Web Developer
+                        </div>
+
+
+                        <p>
+
+                            Hello! I'm Sky, the owner and
+                            creator of GridX. I am passionate
+                            about web development, modern
+                            technologies and creating
+                            beautiful digital experiences.
+
+                        </p>
+
+
+                        <p>
+
+                            My focus is on building responsive,
+                            user-friendly and modern websites
+                            using technologies such as HTML,
+                            CSS, JavaScript and other web
+                            development tools.
+
+                        </p>
+
+
+                        <p>
+
+                            Whether you are learning web
+                            development, working on a project
+                            or simply have a question about
+                            technology, feel free to contact me.
+
+                        </p>
+
+
+                        <!-- SKILLS -->
+
+                        <div class="skills">
+
+                            <span class="skill">
+                                HTML
+                            </span>
+
+                            <span class="skill">
+                                CSS
+                            </span>
+
+                            <span class="skill">
+                                JavaScript
+                            </span>
+
+                            <span class="skill">
+                                Responsive Design
+                            </span>
+
+                            <span class="skill">
+                                Web Development
+                            </span>
+
+                            <span class="skill">
+                                UI Design
+                            </span>
+
+                        </div>
+
+
+                        <!-- EMAIL -->
+
+                        <a
+                            href="mailto:gridX2006@gmail.com"
+                            class="owner-email"
+                        >
+                            ✉ gridX2006@gmail.com
+                        </a>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- =============================================
+                     CONTACT FORM
+                ============================================== -->
+
+                <div class="form-card">
+
+
+                    <div class="form-content">
+
+
+                        <h2>
+                            Send a
+                            <span>Query.</span>
+                        </h2>
+
+
+                        <p class="form-intro">
+
+                            Have something to ask?
+                            Enter your details and your
+                            email application will open
+                            with your message ready to send.
+
+                        </p>
+
+
+                        <!-- FORM -->
+
+                        <form
+                            action="mailto:gridX2006@gmail.com"
+                            method="post"
+                            enctype="text/plain"
+                        >
+
+
+                            <!-- NAME -->
+
+                            <div class="input-group">
+
+                                <label for="name">
+                                    Your Name
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="name"
+                                    name="Name"
+                                    placeholder="Enter your name"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <!-- EMAIL -->
+
+                            <div class="input-group">
+
+                                <label for="email">
+                                    Your Email
+                                </label>
+
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="Email"
+                                    placeholder="Enter your email"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <!-- QUERY -->
+
+                            <div class="input-group">
+
+                                <label for="query">
+                                    Your Query
+                                </label>
+
+                                <textarea
+                                    id="query"
+                                    name="Query"
+                                    placeholder="Write your question or message here..."
+                                    required
+                                ></textarea>
+
+                            </div>
+
+
+                            <!-- SEND -->
+
+                            <button
+                                type="submit"
+                                class="send-btn"
+                            >
+
+                                Send Query
+                                →
+
+                            </button>
+
+
+                        </form>
+
+
+                        <!-- BACK BUTTON -->
+
+                        <div class="back-area">
+
+                            <a
+                                href="home.html"
+                                class="back-btn"
+                            >
+
+                                ← Back to Home
+
+                            </a>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         FOOTER
+    ===================================================== -->
+
+    <footer>
+
+        <p>
+
+            © 2026
+
+            <span>
+                GridX
+            </span>
+
+            |
+
+            Built with HTML, CSS & JavaScript
+
+            |
+
+            <a href="mailto:gridX2006@gmail.com">
+                gridX2006@gmail.com
+            </a>
+
+        </p>
+
+    </footer>
+
+
+</body>
+
+</html>

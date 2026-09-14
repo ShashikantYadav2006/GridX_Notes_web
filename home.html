@@ -1,0 +1,2268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GridX | HTML CSS JavaScript</title>
+
+    <style>
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #0f172a;
+            color: white;
+            overflow-x: hidden;
+        }
+
+
+        /* =====================================================
+           ANIMATED BACKGROUND
+        ===================================================== */
+
+        body::before {
+            content: "";
+
+            position: fixed;
+
+            width: 500px;
+            height: 500px;
+
+            background: rgba(56, 189, 248, 0.08);
+
+            border-radius: 50%;
+
+            filter: blur(100px);
+
+            top: -200px;
+            left: -200px;
+
+            z-index: -1;
+
+            animation:
+                backgroundMove 8s infinite alternate;
+        }
+
+
+        body::after {
+            content: "";
+
+            position: fixed;
+
+            width: 450px;
+            height: 450px;
+
+            background: rgba(249, 115, 22, 0.07);
+
+            border-radius: 50%;
+
+            filter: blur(100px);
+
+            bottom: -200px;
+            right: -200px;
+
+            z-index: -1;
+
+            animation:
+                backgroundMove2 10s infinite alternate;
+        }
+
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        nav {
+            width: 100%;
+            min-height: 70px;
+
+            display: flex;
+
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 15px 7%;
+
+            background:
+                rgba(15, 23, 42, 0.88);
+
+            backdrop-filter: blur(15px);
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 1000;
+
+            border-bottom:
+                1px solid
+                rgba(255, 255, 255, 0.1);
+        }
+
+
+        .logo {
+            font-size: 28px;
+
+            font-weight: bold;
+
+            color: #38bdf8;
+
+            animation:
+                logoGlow 2s infinite alternate;
+        }
+
+
+        .logo span {
+            color: #f97316;
+        }
+
+
+        nav ul {
+            display: flex;
+
+            list-style: none;
+
+            gap: 30px;
+        }
+
+
+        nav ul li a {
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 16px;
+
+            position: relative;
+
+            transition: 0.3s;
+        }
+
+
+        nav ul li a::after {
+            content: "";
+
+            position: absolute;
+
+            width: 0;
+            height: 2px;
+
+            background: #38bdf8;
+
+            left: 0;
+            bottom: -7px;
+
+            transition: 0.3s;
+        }
+
+
+        nav ul li a:hover {
+            color: #38bdf8;
+        }
+
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .hero {
+            min-height: 90vh;
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            align-items: center;
+
+            gap: 60px;
+
+            padding: 80px 8%;
+
+            background:
+                radial-gradient(
+                    circle at 20% 30%,
+                    rgba(56, 189, 248, 0.20),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 80% 70%,
+                    rgba(249, 115, 22, 0.20),
+                    transparent 30%
+                );
+        }
+
+
+        .hero-text {
+            animation:
+                slideLeft 1s ease;
+        }
+
+
+        .small-title {
+            display: inline-block;
+
+            padding: 8px 18px;
+
+            border:
+                1px solid
+                rgba(56, 189, 248, 0.5);
+
+            border-radius: 30px;
+
+            color: #38bdf8;
+
+            margin-bottom: 20px;
+
+            background:
+                rgba(56, 189, 248, 0.05);
+        }
+
+
+        .hero-text h1 {
+            font-size:
+                clamp(45px, 6vw, 80px);
+
+            line-height: 1.1;
+
+            margin-bottom: 25px;
+        }
+
+
+        .hero-text h1 span {
+            color: #38bdf8;
+        }
+
+
+        .hero-text p {
+            color: #cbd5e1;
+
+            font-size: 18px;
+
+            line-height: 1.7;
+
+            max-width: 550px;
+
+            margin-bottom: 30px;
+        }
+
+
+        /* =====================================================
+           GENERAL BUTTON
+        ===================================================== */
+
+        .btn {
+            display: inline-block;
+
+            padding: 14px 30px;
+
+            background:
+                linear-gradient(
+                    45deg,
+                    #0284c7,
+                    #38bdf8
+                );
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 30px;
+
+            font-weight: bold;
+
+            transition: 0.4s;
+
+            box-shadow:
+                0 0 20px
+                rgba(56, 189, 248, 0.3);
+        }
+
+
+        .btn:hover {
+            transform:
+                translateY(-5px)
+                scale(1.05);
+
+            box-shadow:
+                0 10px 35px
+                rgba(56, 189, 248, 0.5);
+        }
+
+
+        /* =====================================================
+           HERO GRID
+        ===================================================== */
+
+        .hero-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            grid-template-rows:
+                repeat(3, 100px);
+
+            gap: 15px;
+
+            animation:
+                slideRight 1s ease;
+        }
+
+
+        .hero-grid div {
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0284c7,
+                    #7c3aed
+                );
+
+            box-shadow:
+                0 15px 40px
+                rgba(0, 0, 0, 0.3);
+
+            animation:
+                float 4s ease-in-out infinite;
+        }
+
+
+        .hero-grid div:nth-child(1) {
+            grid-column: span 2;
+        }
+
+
+        .hero-grid div:nth-child(2) {
+            grid-row: span 2;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f97316,
+                    #ef4444
+                );
+        }
+
+
+        .hero-grid div:nth-child(3) {
+            background: #22c55e;
+        }
+
+
+        .hero-grid div:nth-child(4) {
+            background: #eab308;
+        }
+
+
+        .hero-grid div:nth-child(5) {
+            grid-column: span 2;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ec4899,
+                    #8b5cf6
+                );
+        }
+
+
+        /* =====================================================
+           GENERAL SECTION
+        ===================================================== */
+
+        .section {
+            padding: 100px 8%;
+        }
+
+
+        .section-title {
+            text-align: center;
+
+            margin-bottom: 60px;
+        }
+
+
+        .section-title h2 {
+            font-size: 45px;
+
+            margin-bottom: 15px;
+        }
+
+
+        .section-title h2 span {
+            color: #38bdf8;
+        }
+
+
+        .section-title p {
+            color: #94a3b8;
+
+            font-size: 17px;
+        }
+
+
+        /* =====================================================
+           FEATURE CARDS
+        ===================================================== */
+
+        .card-container {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 25px;
+        }
+
+
+        .card {
+            min-height: 370px;
+
+            padding: 30px;
+
+            border-radius: 25px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #1e293b,
+                    #111827
+                );
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.08);
+
+            position: relative;
+
+            overflow: hidden;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: space-between;
+
+            transition: 0.5s;
+
+            animation:
+                cardAppear 1s ease both;
+        }
+
+
+        .card:hover {
+            transform:
+                translateY(-15px)
+                scale(1.02);
+
+            border-color: #38bdf8;
+
+            box-shadow:
+                0 20px 60px
+                rgba(0, 0, 0, 0.5),
+                0 0 30px
+                rgba(56, 189, 248, 0.15);
+        }
+
+
+        .card::before {
+            content: "";
+
+            position: absolute;
+
+            width: 220px;
+            height: 220px;
+
+            border-radius: 50%;
+
+            background: #38bdf8;
+
+            filter: blur(80px);
+
+            opacity: 0;
+
+            top: -100px;
+            right: -100px;
+
+            transition: 0.5s;
+        }
+
+
+        .card:hover::before {
+            opacity: 0.35;
+        }
+
+
+        .card:nth-child(2)::before {
+            background: #f97316;
+        }
+
+
+        .card:nth-child(3)::before {
+            background: #a855f7;
+        }
+
+
+        .card:nth-child(4)::before {
+            background: #22c55e;
+        }
+
+
+        .card:nth-child(5)::before {
+            background: #ec4899;
+        }
+
+
+        .card:nth-child(6)::before {
+            background: #eab308;
+        }
+
+
+        /* =====================================================
+           CARD ICON
+        ===================================================== */
+
+        .card-icon {
+            width: 70px;
+            height: 70px;
+
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            border-radius: 20px;
+
+            font-size: 32px;
+
+            background:
+                rgba(56, 189, 248, 0.1);
+
+            border:
+                1px solid
+                rgba(56, 189, 248, 0.3);
+
+            margin-bottom: 25px;
+
+            transition: 0.5s;
+        }
+
+
+        .card:hover .card-icon {
+            transform:
+                rotate(8deg)
+                scale(1.1);
+
+            background:
+                rgba(56, 189, 248, 0.2);
+
+            box-shadow:
+                0 0 25px
+                rgba(56, 189, 248, 0.25);
+        }
+
+
+        .card h3 {
+            font-size: 27px;
+
+            margin-bottom: 12px;
+
+            position: relative;
+        }
+
+
+        .card p {
+            color: #94a3b8;
+
+            line-height: 1.7;
+
+            position: relative;
+        }
+
+
+        .card-tag {
+            display: inline-block;
+
+            margin-top: 25px;
+
+            padding: 7px 14px;
+
+            border-radius: 20px;
+
+            font-size: 13px;
+
+            color: #38bdf8;
+
+            background:
+                rgba(56, 189, 248, 0.08);
+
+            border:
+                1px solid
+                rgba(56, 189, 248, 0.2);
+        }
+
+
+        /* =====================================================
+           BIG CARD
+        ===================================================== */
+
+        .big-card {
+            grid-column: span 2;
+
+            min-height: 300px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #1e3a8a,
+                    #0f172a
+                );
+        }
+
+
+        .orange-card {
+            background:
+                linear-gradient(
+                    135deg,
+                    #7c2d12,
+                    #1e293b
+                );
+        }
+
+
+        /* =====================================================
+           TECHNOLOGY SECTION
+        ===================================================== */
+
+        .technology-section {
+            padding: 100px 8%;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    transparent,
+                    rgba(30, 41, 59, 0.3),
+                    transparent
+                );
+        }
+
+
+        .technology-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 25px;
+        }
+
+
+        .tech-card {
+            padding: 40px 30px;
+
+            text-align: center;
+
+            border-radius: 25px;
+
+            background: #1e293b;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.08);
+
+            transition: 0.5s;
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+
+        .tech-card:hover {
+            transform:
+                translateY(-12px);
+
+            border-color: #38bdf8;
+
+            box-shadow:
+                0 20px 50px
+                rgba(0, 0, 0, 0.4);
+        }
+
+
+        /* =====================================================
+           TECHNOLOGY CARD LINK
+        ===================================================== */
+
+        .tech-link {
+            text-decoration: none;
+
+            color: inherit;
+
+            display: block;
+        }
+
+
+        .tech-link .tech-card {
+            cursor: pointer;
+        }
+
+
+        .tech-link .tech-card:hover {
+            border-color: #38bdf8;
+
+            box-shadow:
+                0 20px 50px
+                rgba(0, 0, 0, 0.4),
+                0 0 30px
+                rgba(56, 189, 248, 0.20);
+        }
+
+
+        /* =====================================================
+           TECHNOLOGY ICON
+        ===================================================== */
+
+        .tech-icon {
+            width: 100px;
+            height: 100px;
+
+            margin:
+                0 auto 25px;
+
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            border-radius: 25px;
+
+            font-size: 48px;
+
+            font-weight: bold;
+
+            transition: 0.5s;
+        }
+
+
+        .tech-card:hover .tech-icon {
+            transform:
+                rotateY(360deg);
+        }
+
+
+        .html-icon {
+            background:
+                rgba(249, 115, 22, 0.15);
+
+            color: #f97316;
+
+            border:
+                1px solid
+                rgba(249, 115, 22, 0.4);
+        }
+
+
+        .css-icon {
+            background:
+                rgba(56, 189, 248, 0.15);
+
+            color: #38bdf8;
+
+            border:
+                1px solid
+                rgba(56, 189, 248, 0.4);
+        }
+
+
+        .grid-icon {
+            background:
+                rgba(168, 85, 247, 0.15);
+
+            color: #a855f7;
+
+            border:
+                1px solid
+                rgba(168, 85, 247, 0.4);
+        }
+
+
+        .js-icon {
+            background:
+                rgba(234, 179, 8, 0.15);
+
+            color: #eab308;
+
+            border:
+                1px solid
+                rgba(234, 179, 8, 0.4);
+        }
+
+
+        .tech-card h3 {
+            font-size: 28px;
+
+            margin-bottom: 15px;
+        }
+
+
+        .tech-card p {
+            color: #94a3b8;
+
+            line-height: 1.7;
+        }
+
+
+        /* =====================================================
+           STATS
+        ===================================================== */
+
+        .stats {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 20px;
+
+            margin-top: 60px;
+        }
+
+
+        .stat {
+            text-align: center;
+
+            padding: 35px 20px;
+
+            border-radius: 20px;
+
+            background: #1e293b;
+
+            transition: 0.4s;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.05);
+        }
+
+
+        .stat:hover {
+            transform:
+                translateY(-8px);
+
+            background: #263449;
+
+            border-color: #38bdf8;
+        }
+
+
+        .stat h3 {
+            font-size: 40px;
+
+            color: #38bdf8;
+        }
+
+
+        .stat p {
+            color: #94a3b8;
+
+            margin-top: 8px;
+        }
+
+
+        /* =====================================================
+           REGISTRATION
+        ===================================================== */
+
+        .register-box {
+            max-width: 900px;
+
+            margin: auto;
+
+            padding: 60px 40px;
+
+            text-align: center;
+
+            border-radius: 30px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(2, 132, 199, 0.2),
+                    rgba(124, 58, 237, 0.2)
+                );
+
+            border:
+                1px solid
+                rgba(56, 189, 248, 0.25);
+
+            box-shadow:
+                0 20px 70px
+                rgba(0, 0, 0, 0.3);
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+
+        .register-box::before {
+            content: "";
+
+            position: absolute;
+
+            width: 300px;
+            height: 300px;
+
+            background: #38bdf8;
+
+            border-radius: 50%;
+
+            filter: blur(100px);
+
+            opacity: 0.12;
+
+            top: -180px;
+            left: -100px;
+        }
+
+
+        .register-box h2 {
+            font-size: 42px;
+
+            margin-bottom: 15px;
+        }
+
+
+        .register-box h2 span {
+            color: #38bdf8;
+        }
+
+
+        .register-box p {
+            color: #cbd5e1;
+
+            max-width: 600px;
+
+            margin:
+                0 auto 30px;
+
+            line-height: 1.7;
+        }
+
+
+        /* =====================================================
+           LAST CONTACT BUTTON
+        ===================================================== */
+
+        .contact-button {
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            min-width: 207px;
+
+            height: 58px;
+
+            padding: 0 30px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0284c7,
+                    #38bdf8
+                );
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 35px;
+
+            font-size: 20px;
+
+            font-weight: bold;
+
+            position: relative;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 0 20px
+                rgba(56, 189, 248, 0.35);
+
+            transition:
+                transform 0.4s ease,
+                box-shadow 0.4s ease;
+
+            animation:
+                contactPulse 2.5s infinite;
+        }
+
+
+        /* Moving shine */
+
+        .contact-button::before {
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+
+            left: -100%;
+
+            width: 60%;
+
+            height: 100%;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(255,255,255,0.35),
+                    transparent
+                );
+
+            transform:
+                skewX(-25deg);
+
+            animation:
+                contactShine 3s infinite;
+        }
+
+
+        /* Button text stays above shine */
+
+        .contact-button {
+            isolation: isolate;
+        }
+
+
+        .contact-button:hover {
+
+            transform:
+                translateY(-6px)
+                scale(1.05);
+
+            box-shadow:
+                0 10px 35px
+                rgba(56, 189, 248, 0.65),
+
+                0 0 45px
+                rgba(56, 189, 248, 0.35);
+        }
+
+
+        .contact-button:active {
+
+            transform:
+                translateY(-2px)
+                scale(0.98);
+        }
+
+
+        /* =====================================================
+           CONTACT TEXT LINK
+        ===================================================== */
+
+        .contact-link {
+            color: #38bdf8;
+
+            text-decoration: none;
+
+            font-weight: bold;
+
+            transition: 0.3s;
+        }
+
+
+        .contact-link:hover {
+            color: #7dd3fc;
+
+            text-shadow:
+                0 0 10px #38bdf8;
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        footer {
+            padding: 40px 8%;
+
+            text-align: center;
+
+            background: #020617;
+
+            color: #64748b;
+
+            border-top:
+                1px solid
+                rgba(255, 255, 255, 0.05);
+        }
+
+
+        footer span {
+            color: #38bdf8;
+        }
+
+
+        /* =====================================================
+           ANIMATIONS
+        ===================================================== */
+
+        @keyframes slideLeft {
+
+            from {
+                opacity: 0;
+
+                transform:
+                    translateX(-80px);
+            }
+
+            to {
+                opacity: 1;
+
+                transform:
+                    translateX(0);
+            }
+        }
+
+
+        @keyframes slideRight {
+
+            from {
+                opacity: 0;
+
+                transform:
+                    translateX(80px);
+            }
+
+            to {
+                opacity: 1;
+
+                transform:
+                    translateX(0);
+            }
+        }
+
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform:
+                    translateY(0);
+            }
+
+            50% {
+                transform:
+                    translateY(-15px);
+            }
+        }
+
+
+        @keyframes logoGlow {
+
+            from {
+                text-shadow:
+                    0 0 5px #38bdf8;
+            }
+
+            to {
+                text-shadow:
+                    0 0 20px #38bdf8,
+                    0 0 40px #38bdf8;
+            }
+        }
+
+
+        @keyframes cardAppear {
+
+            from {
+                opacity: 0;
+
+                transform:
+                    translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+            }
+        }
+
+
+        @keyframes backgroundMove {
+
+            from {
+                transform:
+                    translate(0, 0);
+            }
+
+            to {
+                transform:
+                    translate(300px, 200px);
+            }
+        }
+
+
+        @keyframes backgroundMove2 {
+
+            from {
+                transform:
+                    translate(0, 0);
+            }
+
+            to {
+                transform:
+                    translate(-250px, -200px);
+            }
+        }
+
+
+        /* CONTACT BUTTON PULSE */
+
+        @keyframes contactPulse {
+
+            0%,
+            100% {
+
+                box-shadow:
+                    0 0 20px
+                    rgba(56, 189, 248, 0.35);
+            }
+
+            50% {
+
+                box-shadow:
+                    0 0 35px
+                    rgba(56, 189, 248, 0.60);
+            }
+        }
+
+
+        /* CONTACT BUTTON SHINE */
+
+        @keyframes contactShine {
+
+            0% {
+                left: -100%;
+            }
+
+            45%,
+            100% {
+                left: 150%;
+            }
+        }
+
+
+        /* =====================================================
+           RESPONSIVE TABLET
+        ===================================================== */
+
+        @media (max-width: 900px) {
+
+            nav {
+                padding:
+                    15px 4%;
+            }
+
+
+            nav ul {
+                gap: 15px;
+            }
+
+
+            .hero {
+
+                grid-template-columns:
+                    1fr;
+
+                padding:
+                    70px 5%;
+            }
+
+
+            .card-container {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+
+            .technology-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+
+            .stats {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE MOBILE
+        ===================================================== */
+
+        @media (max-width: 600px) {
+
+            nav {
+
+                flex-direction: column;
+
+                gap: 20px;
+
+                padding: 20px;
+            }
+
+
+            nav ul {
+
+                flex-wrap: wrap;
+
+                justify-content: center;
+
+                gap: 15px;
+            }
+
+
+            .hero {
+
+                padding:
+                    60px 5%;
+            }
+
+
+            .hero-text {
+
+                text-align: center;
+            }
+
+
+            .hero-text p {
+
+                margin-left: auto;
+
+                margin-right: auto;
+            }
+
+
+            .hero-grid {
+
+                grid-template-rows:
+                    repeat(3, 75px);
+
+                gap: 10px;
+            }
+
+
+            .card-container {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .big-card {
+
+                grid-column: span 1;
+            }
+
+
+            .technology-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .stats {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .section-title h2 {
+
+                font-size: 35px;
+            }
+
+
+            .register-box {
+
+                padding:
+                    45px 25px;
+            }
+
+
+            .register-box h2 {
+
+                font-size: 32px;
+            }
+
+
+            .contact-button {
+
+                min-width: 190px;
+
+                height: 55px;
+
+                font-size: 18px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         NAVBAR
+    ===================================================== -->
+
+    <nav>
+
+        <div class="logo">
+            Grid<span>X</span>
+        </div>
+
+
+        <ul>
+
+            <li>
+                <a href="#home">
+                    Home
+                </a>
+            </li>
+
+
+            <li>
+                <a href="#about">
+                    About
+                </a>
+            </li>
+
+
+            <li>
+                <a href="#technologies">
+                    Technologies
+                </a>
+            </li>
+
+
+            <li>
+                <a href="#services">
+                    Services
+                </a>
+            </li>
+
+
+            <li>
+                <a href="#register">
+                    Registration
+                </a>
+            </li>
+
+
+            <!-- CONTACT TEXT LINK -->
+
+            <li>
+                <a href="contact.html">
+                    Contact
+                </a>
+            </li>
+
+        </ul>
+
+    </nav>
+
+
+    <!-- =====================================================
+         HERO
+    ===================================================== -->
+
+    <section
+        class="hero"
+        id="home"
+    >
+
+
+        <div class="hero-text">
+
+
+            <span class="small-title">
+                ✦ Modern Web Design
+            </span>
+
+
+            <h1>
+
+                Build With
+
+                <span>
+                    Grid.
+                </span>
+
+            </h1>
+
+
+            <p>
+
+                Welcome to GridX — a modern web experience
+                built using HTML, CSS and JavaScript.
+                Learn how beautiful layouts, responsive cards
+                and smooth animations can work together.
+
+            </p>
+
+
+            <a
+                href="#technologies"
+                class="btn"
+            >
+                Explore Technologies →
+            </a>
+
+
+        </div>
+
+
+        <div class="hero-grid">
+
+            <div></div>
+
+            <div></div>
+
+            <div></div>
+
+            <div></div>
+
+            <div></div>
+
+        </div>
+
+
+    </section>
+
+
+    <!-- =====================================================
+         ABOUT
+    ===================================================== -->
+
+    <section
+        class="section"
+        id="about"
+    >
+
+
+        <div class="section-title">
+
+
+            <h2>
+
+                About
+
+                <span>
+                    GridX
+                </span>
+
+            </h2>
+
+
+            <p>
+
+                A modern card-based website demonstrating
+                the power of HTML, CSS and JavaScript.
+
+            </p>
+
+
+        </div>
+
+
+        <div class="card-container">
+
+
+            <!-- CARD 1 -->
+
+            <div class="card big-card">
+
+
+                <div>
+
+                    <div class="card-icon">
+                        &lt;/&gt;
+                    </div>
+
+
+                    <h3>
+                        Modern Design
+                    </h3>
+
+
+                    <p>
+
+                        GridX uses a clean dark interface,
+                        glowing colors, rounded cards and
+                        modern spacing to create a professional
+                        web experience.
+
+                    </p>
+
+                </div>
+
+
+                <span class="card-tag">
+                    Modern UI
+                </span>
+
+
+            </div>
+
+
+            <!-- CARD 2 -->
+
+            <div class="card orange-card">
+
+
+                <div>
+
+                    <div class="card-icon">
+                        ★
+                    </div>
+
+
+                    <h3>
+                        Animations
+                    </h3>
+
+
+                    <p>
+
+                        Smooth hover effects, floating
+                        elements and glowing backgrounds
+                        make the website feel alive.
+
+                    </p>
+
+                </div>
+
+
+                <span class="card-tag">
+                    CSS Animation
+                </span>
+
+
+            </div>
+
+
+            <!-- CARD 3 -->
+
+            <div class="card">
+
+
+                <div>
+
+                    <div class="card-icon">
+                        ↔
+                    </div>
+
+
+                    <h3>
+                        Responsive
+                    </h3>
+
+
+                    <p>
+
+                        The cards automatically adjust
+                        themselves for desktop, tablet
+                        and mobile screens.
+
+                    </p>
+
+                </div>
+
+
+                <span class="card-tag">
+                    Responsive
+                </span>
+
+
+            </div>
+
+
+            <!-- CARD 4 -->
+
+            <div class="card">
+
+
+                <div>
+
+                    <div class="card-icon">
+                        #
+                    </div>
+
+
+                    <h3>
+                        CSS Grid
+                    </h3>
+
+
+                    <p>
+
+                        CSS Grid allows you to create
+                        powerful two-dimensional layouts
+                        with rows and columns.
+
+                    </p>
+
+                </div>
+
+
+                <span class="card-tag">
+                    CSS Grid
+                </span>
+
+
+            </div>
+
+
+            <!-- CARD 5 -->
+
+            <div class="card">
+
+
+                <div>
+
+                    <div class="card-icon">
+                        ◈
+                    </div>
+
+
+                    <h3>
+                        Creative Layout
+                    </h3>
+
+
+                    <p>
+
+                        Different card sizes, gradients
+                        and grid positions combine to
+                        create attractive layouts.
+
+                    </p>
+
+                </div>
+
+
+                <span class="card-tag">
+                    Creative UI
+                </span>
+
+
+            </div>
+
+
+            <!-- CARD 6 -->
+
+            <div class="card">
+
+
+                <div>
+
+                    <div class="card-icon">
+                        ⚡
+                    </div>
+
+
+                    <h3>
+                        Lightweight
+                    </h3>
+
+
+                    <p>
+
+                        The project uses simple HTML,
+                        CSS and JavaScript without
+                        requiring heavy external libraries.
+
+                    </p>
+
+                </div>
+
+
+                <span class="card-tag">
+                    Fast
+                </span>
+
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         TECHNOLOGIES
+    ===================================================== -->
+
+    <section
+        class="technology-section"
+        id="technologies"
+    >
+
+
+        <div class="section-title">
+
+
+            <h2>
+
+                Learn
+
+                <span>
+                    Web Technologies
+                </span>
+
+            </h2>
+
+
+            <p>
+
+                The main concepts used to build this
+                GridX website.
+
+            </p>
+
+
+        </div>
+
+
+        <div class="technology-grid">
+
+
+            <!-- HTML -->
+
+            <a
+                href="Htmlnotes.html"
+                class="tech-link"
+            >
+
+                <div class="tech-card">
+
+
+                    <div class="tech-icon html-icon">
+                        &lt;/&gt;
+                    </div>
+
+
+                    <h3>
+                        HTML
+                    </h3>
+
+
+                    <p>
+
+                        HTML provides the structure of the
+                        website. Headings, paragraphs, buttons,
+                        sections, cards and navigation are
+                        created using HTML.
+
+                    </p>
+
+
+                </div>
+
+            </a>
+
+
+            <!-- CSS -->
+
+            <a
+                href="cssnotes.html"
+                class="tech-link"
+            >
+
+                <div class="tech-card">
+
+
+                    <div class="tech-icon css-icon">
+                        #
+                    </div>
+
+
+                    <h3>
+                        CSS
+                    </h3>
+
+
+                    <p>
+
+                        CSS controls colors, spacing,
+                        typography, borders, gradients,
+                        shadows, animations and the overall
+                        visual appearance.
+
+                    </p>
+
+
+                </div>
+
+            </a>
+
+
+            <!-- CSS GRID -->
+
+            <div class="tech-card">
+
+
+                <div class="tech-icon grid-icon">
+                    ▦
+                </div>
+
+
+                <h3>
+                    CSS Grid
+                </h3>
+
+
+                <p>
+
+                    CSS Grid creates powerful responsive
+                    layouts using rows and columns. It is
+                    perfect for modern card-based websites.
+
+                </p>
+
+
+            </div>
+
+
+            <!-- JAVASCRIPT -->
+
+            <a
+                href="javanotes.html"
+                class="tech-link"
+            >
+
+                <div class="tech-card">
+
+
+                    <div class="tech-icon js-icon">
+                        JS
+                    </div>
+
+
+                    <h3>
+                        JavaScript
+                    </h3>
+
+
+                    <p>
+
+                        JavaScript adds interactivity and
+                        dynamic behavior to websites.
+                        Learn variables, functions, events,
+                        DOM and more.
+
+                    </p>
+
+
+                </div>
+
+            </a>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         SERVICES
+    ===================================================== -->
+
+    <section
+        class="section"
+        id="services"
+    >
+
+
+        <div class="section-title">
+
+
+            <h2>
+
+                Our
+
+                <span>
+                    Services
+                </span>
+
+            </h2>
+
+
+            <p>
+
+                Everything you need to create modern
+                responsive websites.
+
+            </p>
+
+
+        </div>
+
+
+        <div class="stats">
+
+
+            <div class="stat">
+
+                <h3>
+                    100+
+                </h3>
+
+                <p>
+                    Projects
+                </p>
+
+            </div>
+
+
+            <div class="stat">
+
+                <h3>
+                    50+
+                </h3>
+
+                <p>
+                    Clients
+                </p>
+
+            </div>
+
+
+            <div class="stat">
+
+                <h3>
+                    10+
+                </h3>
+
+                <p>
+                    Designs
+                </p>
+
+            </div>
+
+
+            <div class="stat">
+
+                <h3>
+                    24/7
+                </h3>
+
+                <p>
+                    Support
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         REGISTRATION
+    ===================================================== -->
+
+    <section
+        class="section"
+        id="register"
+    >
+
+
+        <div class="register-box">
+
+
+            <h2>
+
+                Join
+
+                <span>
+                    GridX
+                </span>
+
+            </h2>
+
+
+            <p>
+
+                Want to explore web development and learn
+                HTML, CSS, CSS Grid and JavaScript?
+                Register now and start building modern
+                websites.
+
+            </p>
+
+
+            <a
+                href="aibaseregistrationform.html"
+                class="btn"
+            >
+                Register Now →
+            </a>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         CONTACT SECTION
+         ONLY LAST CONTACT IS A BUTTON
+    ===================================================== -->
+
+    <section
+        class="section"
+        id="contact"
+    >
+
+
+        <div
+            style="
+                text-align: center;
+                max-width: 700px;
+                margin: auto;
+            "
+        >
+
+
+            <h2
+                style="
+                    font-size: 45px;
+                    margin-bottom: 15px;
+                "
+            >
+
+                Let's Build
+
+                <span
+                    style="
+                        color: #38bdf8;
+                    "
+                >
+                    Something.
+                </span>
+
+            </h2>
+
+
+            <p
+                style="
+                    color: #94a3b8;
+                    line-height: 1.7;
+                    margin-bottom: 30px;
+                "
+            >
+
+                Start creating beautiful websites using
+                HTML, CSS, CSS Grid and JavaScript.
+
+            </p>
+
+
+            <!-- =================================================
+                 LAST CONTACT BUTTON
+            ================================================= -->
+
+            <a
+                href="contact.html"
+                class="contact-button"
+            >
+                Contact Us →
+            </a>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         FOOTER
+    ===================================================== -->
+
+    <footer>
+
+
+        <p>
+
+            © 2026
+
+            <span>
+                GridX
+            </span>
+
+            |
+
+            Built with HTML, CSS & JavaScript
+
+            |
+
+            <a
+                href="contact.html"
+                class="contact-link"
+            >
+                Contact
+            </a>
+
+        </p>
+
+
+    </footer>
+
+
+</body>
+
+</html>
